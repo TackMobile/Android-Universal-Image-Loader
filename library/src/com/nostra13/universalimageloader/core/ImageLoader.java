@@ -16,6 +16,7 @@
 package com.nostra13.universalimageloader.core;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.FlushedInputStream;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.assist.LoadedFrom;
 import com.nostra13.universalimageloader.core.assist.MemoryCacheUtil;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.BitmapDisplayer;
@@ -187,7 +189,7 @@ public class ImageLoader {
 			options = configuration.defaultDisplayImageOptions;
 		}
 
-		if (uri == null || uri.length() == 0) {
+		if (TextUtils.isEmpty(uri)) {
 			engine.cancelDisplayTaskFor(imageView);
 			listener.onLoadingStarted(uri, imageView);
 			if (options.shouldShowImageForEmptyUri()) {
@@ -215,7 +217,7 @@ public class ImageLoader {
 				ProcessAndDisplayImageTask displayTask = new ProcessAndDisplayImageTask(engine, bmp, imageLoadingInfo, options.getHandler());
 				engine.submit(displayTask);
 			} else {
-				options.getDisplayer().display(bmp, imageView);
+				options.getDisplayer().display(bmp, imageView, LoadedFrom.MEMORY_CACHE);
 				listener.onLoadingComplete(uri, imageView, bmp);
 			}
 		} else {

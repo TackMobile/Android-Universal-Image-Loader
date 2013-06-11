@@ -17,8 +17,11 @@ release.properties
 .externalToolBuilders/
 
 # IntelliJ
-# *.iml
-# *.ipr
-# *.iws
-# .idea/
+*.iml
+*.ipr
+*.iws
+.idea/
 out/
+
+# Mac 
+.DS_Store
